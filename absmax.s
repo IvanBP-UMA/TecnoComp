@@ -31,11 +31,12 @@ absmax:
 	bl abs
 	mov r4, r0
 	pop {r0-r1}
-	ldr r2, [r0]
+	sub r1, #1
 	
 	for:
 		cmp r1, #0
 		beq exitAbsmax
+		ldr r2, [r0], #4
 		push {r0-r1}
 		mov r0, r2
 		bl abs
@@ -43,7 +44,6 @@ absmax:
 		cmp r3, r4
 		movgt r4, r3
 		pop {r0-r1}
-		ldr r2, [r0], #4
 		sub r1, #1
 		b for
 	
