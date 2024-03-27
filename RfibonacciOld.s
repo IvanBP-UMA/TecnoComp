@@ -1,5 +1,5 @@
 .data
-search: .word 8
+search: .word 7
 res: .word 0
 	
 .text
@@ -7,8 +7,6 @@ res: .word 0
 main: 
 ldr r1, =search
 ldr r0, [r1]
-mov r1, #0
-mov r2, #1
 push {lr}
 bl Rfibonacci
 pop {lr}
@@ -17,20 +15,28 @@ str r0, [r1]
 bx lr
 
 Rfibonacci:
-	cmp r0, #0
+	cmp r0, #1
 	ble base
 	
-	push {lr}
-	add r1, r1, r2
-	mov r3, r1
-	mov r1, r2
-	mov r2, r3
+	push {r0}
 	sub r0, #1
+	push {lr}
 	bl Rfibonacci
 	pop {lr}
+	mov r1, r0
+	pop {r0}
+	
+	sub r0, #2
+	push {lr}
+	push {r1}
+	bl Rfibonacci
+	pop {r1}
+	pop {lr}
+	mov r2, r0
+	
+	add r0, r1, r2
 	
 	
 	base:
-		mov r0, r1
 		bx lr
 		
